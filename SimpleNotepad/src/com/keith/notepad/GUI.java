@@ -1,5 +1,8 @@
 package com.keith.notepad;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+
 import javax.swing.BorderFactory;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
@@ -8,7 +11,8 @@ import javax.swing.JMenuItem;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
-public class GUI {
+
+public class GUI implements ActionListener {
 	
 	//init the JFrame as window
 	JFrame window;
@@ -28,7 +32,7 @@ public class GUI {
 	//individual menu items
 	JMenuItem iNew, iOpen, iSave, iSaveAs, iExit;
 	
-	
+	Function_File file = new Function_File(this);
 
 	public static void main(String[] args) {
 		new GUI();
@@ -83,9 +87,13 @@ public class GUI {
 	
 	public void createFileMenu() {
 		iNew = new JMenuItem("New");
+		iNew.addActionListener(this);
+		iNew.setActionCommand("New");
 		menuFile.add(iNew);
 		
 		iOpen = new JMenuItem("Open");
+		iOpen.addActionListener(this);
+		iOpen.setActionCommand("Open");
 		menuFile.add(iOpen);
 		
 		iSave = new JMenuItem("Save");
@@ -96,6 +104,17 @@ public class GUI {
 		
 		iExit = new JMenuItem("Exit");
 		menuFile.add(iExit);
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		
+		String command = e.getActionCommand();
+		
+		switch(command) {
+		case "New": file.newFile(); break;
+		case "Open": file.open(); break;
+		}
 	}
 
 }
